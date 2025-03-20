@@ -62,6 +62,14 @@ const styles = StyleSheet.create({
   container: { flex: 1, padding: 10, backgroundColor: '#fff' },
   heading: { fontSize: 22, fontWeight: 'bold', textAlign: 'center', marginBottom: 10 },
   noBooks: { fontSize: 18, textAlign: 'center', marginTop: 20, color: 'gray' },
-  bookItem: { padding: 15, backgroundColor: '#f8f8f8', marginBottom: 5, borderRadius: 5, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  bookItem: { 
+    padding: 15, 
+    backgroundColor: '#f8f8f8', 
+    marginBottom: 5, 
+    borderRadius: 5, 
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    alignItems: 'center' 
+  },
   bookTitle: { fontSize: 18, fontWeight: 'bold' },
 });
