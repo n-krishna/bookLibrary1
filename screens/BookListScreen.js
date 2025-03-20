@@ -42,6 +42,8 @@ export default function BookListScreen({ navigation }) {
         <FlatList
           data={books}
           keyExtractor={(item) => item.id}
+          numColumns={2}  // ✅ Displays books in 2 columns like a RecyclerView
+          columnWrapperStyle={styles.row}  // ✅ Adds space between rows
           renderItem={({ item }) => (
             <TouchableOpacity 
               style={styles.bookItem} 
@@ -62,11 +64,28 @@ const styles = StyleSheet.create({
   heading: { fontSize: 22, fontWeight: 'bold', textAlign: 'center', marginBottom: 10 },
   loadingText: { fontSize: 18, textAlign: 'center', marginTop: 20, color: 'blue' },
   noBooks: { fontSize: 18, textAlign: 'center', marginTop: 20, color: 'gray' },
-  bookItem: { padding: 15, backgroundColor: '#f8f8f8', marginBottom: 5, borderRadius: 5, alignItems: "center" },
-  bookTitle: { fontSize: 18, fontWeight: 'bold', marginTop: 5 },
+  row: { 
+    flex: 1, 
+    justifyContent: "space-between", 
+    marginBottom: 10 
+  },  // ✅ Ensures even spacing between columns
+  bookItem: { 
+    flex: 1, 
+    marginHorizontal: 5, 
+    padding: 10, 
+    backgroundColor: '#f8f8f8', 
+    borderRadius: 5, 
+    alignItems: "center" 
+  },
+  bookTitle: { 
+    fontSize: 16, 
+    fontWeight: 'bold', 
+    textAlign: 'center', 
+    marginTop: 5 
+  },
   bookImage: {
-    width: 100,  
-    height: 150, 
+    width: 120,  
+    height: 180, 
     resizeMode: "cover",
     borderRadius: 5,
   },
