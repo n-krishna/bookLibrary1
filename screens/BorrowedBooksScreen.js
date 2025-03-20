@@ -7,7 +7,7 @@ import { db } from '../firebaseConfig';
 export default function BorrowedBooksScreen({ navigation }) {
   const [borrowedBooks, setBorrowedBooks] = useState([]);
 
-  // Refresh when navigating back
+ 
   useFocusEffect(
     React.useCallback(() => {
       fetchBorrowedBooks();
@@ -16,7 +16,7 @@ export default function BorrowedBooksScreen({ navigation }) {
 
   const fetchBorrowedBooks = async () => {
     try {
-      const q = query(collection(db, 'books'), where('borrowed', '==', true)); // Fetch only borrowed books
+      const q = query(collection(db, 'books'), where('borrowed', '==', true)); 
       const querySnapshot = await getDocs(q);
       const booksList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setBorrowedBooks(booksList);
@@ -31,7 +31,7 @@ export default function BorrowedBooksScreen({ navigation }) {
       await updateDoc(bookRef, { borrowed: false });
 
       Alert.alert('Success', `${book.bookName} has been returned.`);
-      navigation.navigate('Books'); // Redirect to available books
+      navigation.navigate('Books'); 
     } catch (error) {
       console.error('Error returning book:', error);
     }

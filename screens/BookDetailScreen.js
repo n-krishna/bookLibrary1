@@ -6,14 +6,14 @@ import { db } from '../firebaseConfig';
 export default function BookDetailScreen({ route, navigation }) {
   const { book } = route.params;
   const [borrowedBooksCount, setBorrowedBooksCount] = useState(0);
-  const [isBorrowed, setIsBorrowed] = useState(false); // Initially false, updated from Firestore
+  const [isBorrowed, setIsBorrowed] = useState(false); 
 
   useEffect(() => {
     checkBorrowedCount();
-    fetchBookStatus(); // ✅ Fetch book status in real time
+    fetchBookStatus(); 
   }, []);
 
-  // ✅ Listen for book status updates (real-time)
+ 
   const fetchBookStatus = () => {
     const bookRef = doc(db, `books/${book.id}`);
 
@@ -25,7 +25,7 @@ export default function BookDetailScreen({ route, navigation }) {
     });
   };
 
-  // ✅ Check the count of currently borrowed books
+ 
   const checkBorrowedCount = async () => {
     try {
       const q = query(collection(db, 'books'), where('borrowed', '==', true));
@@ -37,7 +37,7 @@ export default function BookDetailScreen({ route, navigation }) {
     }
   };
 
-  // ✅ Handle Borrow Button Click
+
   const handleBorrow = async () => {
     if (borrowedBooksCount >= 3) {
       Alert.alert('Limit Reached', 'You cannot borrow more than three books.');

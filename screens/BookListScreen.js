@@ -8,7 +8,7 @@ export default function BookListScreen({ navigation }) {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch books when screen is focused
+  
   useFocusEffect(
     useCallback(() => {
       fetchAvailableBooks();
@@ -42,8 +42,8 @@ export default function BookListScreen({ navigation }) {
         <FlatList
           data={books}
           keyExtractor={(item) => item.id}
-          numColumns={2}  // ✅ Displays books in 2 columns like a RecyclerView
-          columnWrapperStyle={styles.row}  // ✅ Adds space between rows
+          numColumns={2}  
+          columnWrapperStyle={styles.row}  
           renderItem={({ item }) => (
             <TouchableOpacity 
               style={styles.bookItem} 
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     flex: 1, 
     justifyContent: "space-between", 
     marginBottom: 10 
-  },  // ✅ Ensures even spacing between columns
+  },  
   bookItem: { 
     flex: 1, 
     marginHorizontal: 5, 
