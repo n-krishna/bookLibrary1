@@ -1,14 +1,15 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import React, { useCallback, useState } from "react";
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { db } from "../firebaseConfig";
 
 export default function BookListScreen({ navigation }) {
   const [books, setBooks] = useState([]);
+  const [filteredBooks, setFilteredBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  
   useFocusEffect(
     useCallback(() => {
       fetchAvailableBooks();
@@ -24,23 +25,43 @@ export default function BookListScreen({ navigation }) {
 
       console.log("Fetched Available Books:", bookList);
       setBooks(bookList);
+      setFilteredBooks(bookList);
     } catch (error) {
       console.error("Error fetching available books:", error);
     }
     setLoading(false);
   };
 
+  const handleSearch = (text) => {
+    setSearchTerm(text);
+    if (text.trim() === "") {
+      setFilteredBooks(books);
+    } else {
+      const filtered = books.filter(book => 
+        book.bookName.toLowerCase().includes(text.toLowerCase())
+      );
+      setFilteredBooks(filtered);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Available Books</Text>
+      
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Search books..."
+        value={searchTerm}
+        onChangeText={handleSearch}
+      />
 
       {loading ? (
         <Text style={styles.loadingText}>Loading books...</Text>
-      ) : books.length === 0 ? (
+      ) : filteredBooks.length === 0 ? (
         <Text style={styles.noBooks}>No books available</Text>
       ) : (
         <FlatList
-          data={books}
+          data={filteredBooks}
           keyExtractor={(item) => item.id}
           numColumns={2}  
           columnWrapperStyle={styles.row}  
@@ -62,6 +83,14 @@ export default function BookListScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 10, backgroundColor: '#fff' },
   heading: { fontSize: 22, fontWeight: 'bold', textAlign: 'center', marginBottom: 10 },
+  searchInput: { 
+    height: 40, 
+    borderColor: '#ccc', 
+    borderWidth: 1, 
+    borderRadius: 5, 
+    paddingHorizontal: 10, 
+    marginBottom: 10 
+  },
   loadingText: { fontSize: 18, textAlign: 'center', marginTop: 20, color: 'blue' },
   noBooks: { fontSize: 18, textAlign: 'center', marginTop: 20, color: 'gray' },
   row: { 
@@ -90,3 +119,4 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 });
+
